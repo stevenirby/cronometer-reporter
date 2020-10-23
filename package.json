@@ -1,0 +1,23 @@
+{
+  "name": "cronometer-reporter",
+  "version": "1.0.0",
+  "description": "Report your calories and carbs from cronometer.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "root@45.33.119.114:projects/calorie-count.git"
+  },
+  "author": "Steven Irby",
+  "license": "ISC",
+  "dependencies": {
+    "eventsource": "^1.0.7",
+    "express": "^4.16.4",
+    "flat-cache": "^2.0.1",
+    "pug": "^2.0.3",
+    "puppeteer": "^5.3.1",
+    "underscore": "^1.11.0"
+  }
+}

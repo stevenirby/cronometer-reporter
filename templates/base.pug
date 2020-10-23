@@ -1,0 +1,79 @@
+doctype html
+html
+    head
+      title Calories / Carbs
+      meta(http-equiv="refresh" content="1800;url=/")
+      meta(name="apple-mobile-web-app-capable" content="yes")
+      meta(name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes")
+      meta(name="apple-touch-fullscreen" content="yes")
+      meta(name="apple-mobile-web-app-status-bar-style" content="black")
+      script(src="/main.js")
+      style(type="text/css").
+          body {
+              background-color: black;
+          }
+
+          .container {
+            display: inline-block;
+            width: 100%;
+          }
+
+          h1, span {
+              font-size: 250px;
+              color: green;
+              line-height: 1px;
+              text-align: center;
+          }
+
+          .cals {
+            float: left;
+            width: 50%;
+          }
+
+          h1[amount]:after {
+            text-align: center;
+            content: attr(amount);
+          }
+
+          h1[amount^="-"]:after {
+            color: red;
+          }
+
+          h1[carbs]:after {
+            text-align: center;
+            content: attr(carbs);
+          }
+
+          .carbs {
+            float: right;
+            width: 50%;
+          }
+
+          h1[carbs^="-"]:after {
+            color: red;
+          }
+
+          span {
+            font-size: 200px;
+            line-height: 200px;
+            color: white;
+          }
+
+          #burnGuard {
+            background-color: #FFFFFF;
+            width: 2px;
+            height: 100vh;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            display: none;
+          }
+    body
+      div#burnGuard
+      div.container
+        div.cals
+          span Cals
+          h1(amount=calories)
+        div.carbs
+          span Carbs
+          h1(carbs=carbs)
