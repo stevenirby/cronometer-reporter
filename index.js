@@ -15,12 +15,9 @@ const DEBUG = process.env.DEBUG || false;
 const HEADLESS = process.env.HEADLESS === "false" ? false : true;
 const app = express();
 const getFileUpdatedDate = () => fs.statSync(cache._pathToFile).mtime;
-const log = (msg) => {
-  if (DEBUG) {
-    console.log(msg);
-  }
-};
+const log = (msg) => {if (DEBUG) console.log(msg)};
 
+// if there is a webhook url set listen for incoming data from it.
 if (WEBHOOKURL) {
   const evtSource = new EventSource(WEBHOOKURL);
 
@@ -34,10 +31,10 @@ if (WEBHOOKURL) {
 
 // debounce this so it doesn't open 10,000 browser sessions if user hits refresh non-stop.
 const checkForData = debounce(() => {
-  const TWO_HOUR = 60 * 120 * 1000;
+  const hours = 60 * 120 * 1000;
 
   log("Date last updated: " + getFileUpdatedDate());
-  if (new Date() - new Date(getFileUpdatedDate()) > TWO_HOUR) {
+  if (new Date() - new Date(getFileUpdatedDate()) > hours) {
     log("Fetching new data via webdriver...")
     startDataScrape(cache);
   }
@@ -64,7 +61,7 @@ async function doLogin(page) {
   await page.waitForSelector(".servingsPanel");
 }
 
-async function setCookies(page) {
+async function saveCookies(page) {
   const cookiesObject = await page.cookies();
 
   log("***** Cooke data saved *****");
@@ -77,12 +74,12 @@ async function parseData(page, cache) {
   await page.waitFor(4000);
 
   const data = await page.evaluate(function() {
-    const carbsAllowed = 20;
     let carbs = document.querySelector(".diary_side_box .summary-carbs").textContent;
-    carbs = carbs.replace(/\d\d%/gi, "").replace("(", "").replace(")", "").trim();
+    carbs = carbs.replace(/\s\(\d?\d%\)/gi, "").replace(/\sg/gi, "").replace(/\s+/gi, "").split("/");
 
+    const carbsAllowed = carbs[1];
     const calories = document.querySelectorAll(".diary_side_box img")[1].nextElementSibling.textContent;
-    const totalCarbs = Math.round(carbsAllowed - parseFloat(carbs.match(/\d\d.\d+/)[0]));
+    const totalCarbs = Math.round(carbsAllowed - parseFloat(carbs[0]));
     const totalCalories = parseInt(calories, 10);
 
     if (totalCarbs && totalCalories) {
@@ -122,13 +119,13 @@ async function startDataScrape(cache) {
       await page.waitForSelector(".servingsPanel", 10000);
       log("**** LOGGED IN ****");
       await parseData(page, cache);
-      await setCookies(page);
+      await saveCookies(page);
     } catch (err) {
       await page.goto("https://cronometer.com/login/");
       log("**** NOT LOGGED IN: logging in... ****");
       await doLogin(page);
       await parseData(page, cache);
-      await setCookies(page);
+      await saveCookies(page);
   }
 
   browser.close();
