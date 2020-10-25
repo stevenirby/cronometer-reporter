@@ -47,6 +47,14 @@ Obviously an account and data on cronometer.
 npm install
 ```
 
+### Ubuntu
+
+If running on ubuntu you might get some dependency errors. If so just install the dependencies for puppeteer.
+
+```sh
+sudo apt-get update && apt-get install -y libgtk2.0-0 libgtk-3-0 libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb libgbm-dev
+```
+
 ## Usage
 
 ```sh
@@ -80,6 +88,15 @@ To spawn the browser window and see the scrapping in action, or to do some debug
 ```sh
 HEADLESS=false USERNAME="username_here" PASSWORD="your_password_here" npm run start
 ```
+
+### Sandbox error
+
+If you get an error about running without --no-sandbox, use the `SANDBOXMODE` param.
+
+```sh
+SANDBOXMODE=false USERNAME="username_here" PASSWORD="your_password_here" npm run start
+```
+
 
 ### Optional Webhook
 
