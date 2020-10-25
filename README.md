@@ -59,7 +59,7 @@ Or
 USERNAME="username_here" PASSWORD="your_password_here" node index.js
 ```
 
-_Alternatively, you can hardcode your username and password in the [index.js file](./index.js)._
+_Alternatively, you can hardcode your username and password in the [index.js file](./index.js#L11)._
 
 ## Other params
 
