@@ -1,9 +1,9 @@
 // Honestly... I have no idea if this is necessary or if it works.
 // The idea is to move a line across the screen to try to prevent screen burn.
-// I feel like it's better than nothing.
-// Plus, I notice it grabs my attention more. And it's kind of purrrty.
+// I feel like it"s better than nothing.
+// Plus, I notice it grabs my attention more. And it"s kind of purrrty.
 
-document.addEventListener('DOMContentLoaded', ready);
+document.addEventListener("DOMContentLoaded", ready);
 
 function ready() {
     const burnGuard = document.querySelector("#burnGuard");
@@ -42,4 +42,13 @@ function ready() {
     }
 
     setTimeout(moveLine, delay);
+
+    if (!document.querySelector("#calories").getAttribute("calories") && !document.querySelector("#carbs").getAttribute("carbs")) {
+        document.querySelector(".cals").style = "display: none;"
+        document.querySelector(".carbs").style = "display: none;"
+        document.querySelector(".fetching").style = "display: block;"
+        setTimeout(function () {
+            window.location.reload();
+        }, 20000);
+    }
 }

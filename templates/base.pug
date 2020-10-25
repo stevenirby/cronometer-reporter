@@ -30,12 +30,12 @@ html
             width: 50%;
           }
 
-          h1[amount]:after {
+          h1[calories]:after {
             text-align: center;
-            content: attr(amount);
+            content: attr(calories);
           }
 
-          h1[amount^="-"]:after {
+          h1[calories^="-"]:after {
             color: red;
           }
 
@@ -68,12 +68,24 @@ html
             left: 0px;
             display: none;
           }
+
+          .fetching {
+            color: #ffffff;
+            font-size: 30px;
+            display: none;
+          }
+
+          .fetching span {
+            font-size: 24px;
+          }
     body
       div#burnGuard
       div.container
+        div.fetching
+          h3 Fetching data... <span>(this page will refresh automatically)</span>
         div.cals
           span Cals
-          h1(amount=calories)
+          h1#calories(calories=calories)
         div.carbs
           span Carbs
-          h1(carbs=carbs)
+          h1#carbs(carbs=carbs)
