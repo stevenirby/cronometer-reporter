@@ -90,7 +90,7 @@ async function parseData(page, cache) {
 
   const data = await page.evaluate(function() {
     let carbs = document.querySelector(".diary_side_box .summary-carbs").textContent;
-    carbs = carbs.replace(/\s\(\d?\d%\)/gi, "").replace(/\sg/gi, "").replace(/\s+/gi, "").split("/");
+    carbs = carbs.replace(/\s\(\d+%\)/gi, "").replace(/\sg/gi, "").replace(/\s+/gi, "").split("/");
 
     const carbsAllowed = carbs[1];
     const calories = document.querySelectorAll(".diary_side_box img")[1].nextElementSibling.textContent;

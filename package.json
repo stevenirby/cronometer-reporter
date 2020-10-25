@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "root@45.33.119.114:projects/calorie-count.git"
+    "url": "git@github.com:stevenirby/cronometer-reporter.git"
   },
   "author": "Steven Irby",
   "license": "ISC",
