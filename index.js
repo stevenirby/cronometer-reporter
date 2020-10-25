@@ -13,6 +13,7 @@ const PASSWORD = process.env.PASSWORD || "<your password here>";
 const WEBHOOKURL = process.env.WEBHOOKURL || "<webhook url here>";
 const DEBUG = process.env.DEBUG || false;
 const HEADLESS = process.env.HEADLESS === "false" ? false : true;
+const SANBOXMODE = process.env.SANBOXMODE || false;
 const app = express();
 const getFileUpdatedDate = () => fs.statSync(cache._pathToFile).mtime;
 const log = (msg) => {if (DEBUG) console.log(msg)};
@@ -113,7 +114,13 @@ async function parseData(page, cache) {
 async function startDataScrape(cache) {
   const url = "https://cronometer.com/";
   const cookies = JSON.parse(cache.getKey("cookie"));
-  const browser = await puppeteer.launch({headless: HEADLESS});
+  let options = {headless: HEADLESS};
+
+  if (SANBOXMODE) {
+    options["args"] = ['--no-sandbox'];
+  }
+
+  const browser = await puppeteer.launch(options);
   const page = await browser.newPage();
 
 
