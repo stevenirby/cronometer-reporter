@@ -14,7 +14,11 @@ const WEBHOOKURL = process.env.WEBHOOKURL || "<webhook url here>";
 const DEBUG = process.env.DEBUG || false;
 const HEADLESS = process.env.HEADLESS === "false" ? false : true;
 const app = express();
-const getFileUpdatedDate = () => fs.statSync(cache._pathToFile).mtime;
+const getFileUpdatedDate = () => {
+  if (cache && cache._pathToFile) {
+    fs.statSync(cache._pathToFile).mtime;
+  }
+}
 const log = (msg) => {if (DEBUG) console.log(msg)};
 
 // if there is a webhook url set listen for incoming data from it.
